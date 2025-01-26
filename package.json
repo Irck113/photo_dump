@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "exif": "^0.6.0",
+    "exif-reader": "^2.0.1",
+    "piexifjs": "^1.0.6"
+  }
+}

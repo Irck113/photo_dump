@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imágenes del Día - Galería 2025</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f8f9fa;
+      }
+      .back-button {
+        padding: 8px 16px;
+        background-color: #e3f2fd;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        color: #1976d2;
+        font-weight: bold;
+        text-decoration: none;
+      }
+      .back-button:hover {
+        background-color: #bbdefb;
+      }
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .image-container {
+        position: relative;
+        padding-bottom: 100%;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .image-container img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+      }
+      .image-container:hover img {
+        transform: scale(1.05);
+      }
+      .no-images {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+        font-size: 1.2em;
+        grid-column: 1 / -1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <a href="/" class="back-button">← Volver al Calendario</a>
+      <h1 id="pageTitle">Cargando...</h1>
+    </div>
+    <div id="images" class="image-grid"></div>
+
+    <script>
+      const months = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
+      ];
+
+      async function loadImages() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const month = urlParams.get("month");
+        const day = urlParams.get("day");
+
+        if (!month || !day) {
+          window.location.href = "/";
+          return;
+        }
+
+        document.getElementById("pageTitle").innerText = `${day} de ${
+          months[month - 1]
+        } de 2025`;
+
+        try {
+          const response = await fetch("/api/images");
+          const imagesByDate = await response.json();
+
+          const date = `2025-${month.padStart(2, "0")}-${
+            day.padStart(2, "0")
+          }`;
+          const images = imagesByDate[date] || [];
+
+          const container = document.getElementById("images");
+
+          if (images.length === 0) {
+            container.innerHTML =
+              '<div class="no-images">No hay imágenes para este día</div>';
+            return;
+          }
+
+          images.forEach((image) => {
+            const imageContainer = document.createElement("div");
+            imageContainer.className = "image-container";
+
+            const img = document.createElement("img");
+            img.src = `/images/${image.path.split("\\").pop()}`;
+            img.alt = `Imagen del día ${day}`;
+
+            const info = document.createElement("div");
+            info.className = "image-info";
+            info.innerHTML = `
+                        <div>Cámara: ${image.metadata.camera}</div>
+                        <div>ISO: ${image.metadata.iso}</div>
+                        <div>Exposición: ${image.metadata.exposure}</div>
+                        <div>Apertura: ${image.metadata.aperture}</div>
+                    `;
+
+            imageContainer.appendChild(img);
+            imageContainer.appendChild(info);
+            container.appendChild(imageContainer);
+          });
+        } catch (error) {
+          console.error("Error al cargar las imágenes:", error);
+          document.getElementById("images").innerHTML =
+            '<div class="no-images">Error al cargar las imágenes</div>';
+        }
+      }
+
+      loadImages();
+    </script>
+  </body>
+</html>
