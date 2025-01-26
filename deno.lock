@@ -1,0 +1,56 @@
+{
+  "version": "4",
+  "specifiers": {
+    "jsr:@std/assert@1": "1.0.11",
+    "jsr:@std/internal@^1.0.5": "1.0.5",
+    "npm:exif-reader@^2.0.1": "2.0.1",
+    "npm:exif@0.6": "0.6.0",
+    "npm:piexifjs@^1.0.6": "1.0.6"
+  },
+  "jsr": {
+    "@std/assert@1.0.11": {
+      "integrity": "2461ef3c368fe88bc60e186e7744a93112f16fd110022e113a0849e94d1c83c1",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
+    },
+    "@std/internal@1.0.5": {
+      "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
+    }
+  },
+  "npm": {
+    "debug@2.6.9": {
+      "integrity": "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==",
+      "dependencies": [
+        "ms"
+      ]
+    },
+    "exif-reader@2.0.1": {
+      "integrity": "sha512-gCQ/86RiAWSjeSlalj1G99IC6XnxbwkvB91HLqhh8somj/YBtC/2xuplvyjDjlfO7NsmYREPPElu/Syuy/H52g=="
+    },
+    "exif@0.6.0": {
+      "integrity": "sha512-gEwM4uanNMfLnDNKclZ7jPEA99E3rpy4ntoS6QW8u6murZjl1o8qRaPdMoC46Syg3d9/QaET0bYKhWlTwJCPgg==",
+      "dependencies": [
+        "debug"
+      ]
+    },
+    "ms@2.0.0": {
+      "integrity": "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A=="
+    },
+    "piexifjs@1.0.6": {
+      "integrity": "sha512-0wVyH0cKohzBQ5Gi2V1BuxYpxWfxF3cSqfFXfPIpl5tl9XLS5z4ogqhUCD20AbHi0h9aJkqXNJnkVev6gwh2ag=="
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/assert@1"
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:exif-reader@^2.0.1",
+        "npm:exif@0.6",
+        "npm:piexifjs@^1.0.6"
+      ]
+    }
+  }
+}
